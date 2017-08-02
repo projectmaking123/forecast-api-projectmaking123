@@ -1,12 +1,14 @@
+require('dotenv').config()
 const express = require('express');
 const request = require('request');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', function(req, res, next) {
+app.get('/:lat/:lng?', function(req, res, next) {
   request({
-    uri: 'http://sudoku-api.herokuapp.com/api/v1/sudoku/generate'
+    uri: ('https://api.darksky.net/forecast/' + process.env.API_KEY + '/' + req.params.lat + ',' + req.params.lng)
   }).pipe(res);
+  console.log(res);
 });
 
 app.listen(port);
